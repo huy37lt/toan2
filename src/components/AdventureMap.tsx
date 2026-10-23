@@ -25,13 +25,18 @@ export const AdventureMap: React.FC<Props> = ({
   return (
     <div className="w-full max-w-5xl mx-auto space-y-8">
       {/* Hero Visual Card */}
-      <div className="relative rounded-3xl overflow-hidden shadow-lg border-4 border-amber-200 bg-amber-50">
+      <div className="relative rounded-3xl overflow-hidden shadow-lg border-4 border-amber-200 bg-gradient-to-r from-sky-600 via-indigo-600 to-amber-600">
         <div className="relative h-56 sm:h-72 w-full overflow-hidden">
           <img
             src={heroBannerUrl}
             alt="Bản đồ học toán lớp 2"
             className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (!target.src.includes('/assets/images/hero_math_adventure')) {
+                target.src = '/assets/images/hero_math_adventure_1792732529554.jpg';
+              }
+            }}
           />
           {/* Subtle gradient scrim */}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent flex flex-col justify-end p-6 sm:p-8 text-white">

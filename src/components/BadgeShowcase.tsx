@@ -43,7 +43,13 @@ export const BadgeShowcase: React.FC<Props> = ({
             <img
               src={profile.avatar}
               alt={profile.name}
-              className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl object-cover border-4 border-amber-300 shadow-md"
+              className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl object-cover border-4 border-amber-300 shadow-md bg-amber-100"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.includes('avatar_cute_owl') && !target.src.includes('mascot_little_tiger')) {
+                  target.src = owlAvatarUrl;
+                }
+              }}
             />
             <div className="absolute -bottom-2 -right-2 bg-amber-500 text-white p-1.5 rounded-full shadow-xs">
               <Sparkles className="w-4 h-4" />

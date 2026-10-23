@@ -9,10 +9,14 @@ import { INITIAL_ISLANDS, INITIAL_BADGES } from './utils/mathQuestions';
 import { ActiveTab, LevelInfo, UserProfile, Badge } from './types/math';
 import { sounds } from './utils/audio';
 
-// High-fidelity generated assets
-const HERO_BANNER_URL = '/src/assets/images/hero_math_adventure_1792732529554.jpg';
-const OWL_AVATAR_URL = '/src/assets/images/avatar_cute_owl_1792732530016.jpg';
-const TIGER_AVATAR_URL = '/src/assets/images/mascot_little_tiger_1792732530821.jpg';
+// High-fidelity generated assets imported via Vite bundler
+import heroBannerAsset from './assets/images/hero_math_adventure_1792732529554.jpg';
+import owlAvatarAsset from './assets/images/avatar_cute_owl_1792732530016.jpg';
+import tigerAvatarAsset from './assets/images/mascot_little_tiger_1792732530821.jpg';
+
+const HERO_BANNER_URL = heroBannerAsset;
+const OWL_AVATAR_URL = owlAvatarAsset;
+const TIGER_AVATAR_URL = tigerAvatarAsset;
 
 const STORAGE_KEY = 'toan_lop_2_save_v1';
 
@@ -26,7 +30,12 @@ export default function App() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Automatically migrate legacy /src/ paths in localStorage
+        if (typeof parsed.avatar === 'string' && parsed.avatar.includes('/src/assets/images/')) {
+          parsed.avatar = parsed.avatar.includes('tiger') ? TIGER_AVATAR_URL : OWL_AVATAR_URL;
+        }
+        return parsed;
       }
     } catch {
       // Fallback

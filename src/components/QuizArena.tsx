@@ -136,7 +136,13 @@ export const QuizArena: React.FC<Props> = ({
               <img
                 src={owlAvatarUrl}
                 alt="Bé Cú Thông Thái"
-                className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-xs shrink-0"
+                className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-xs shrink-0 bg-amber-100"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes('avatar_cute_owl')) {
+                    target.src = '/assets/images/avatar_cute_owl_1792732530016.jpg';
+                  }
+                }}
               />
               <div className="flex-1 min-w-0">
                 <div className="text-xs font-bold text-blue-900 flex items-center gap-2">

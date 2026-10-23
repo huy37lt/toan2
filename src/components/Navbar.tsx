@@ -124,10 +124,20 @@ export const Navbar: React.FC<Props> = ({
             sounds.playClick();
             onTabChange('achievements');
           }}
-          className="w-8 h-8 rounded-full overflow-hidden border-2 border-amber-400 hover:scale-105 transition-transform cursor-pointer shadow-xs"
+          className="w-8 h-8 rounded-full overflow-hidden border-2 border-amber-400 hover:scale-105 transition-transform cursor-pointer shadow-xs bg-amber-100"
           title="Hồ sơ của bé"
         >
-          <img src={userAvatarUrl} alt="Bé" className="w-full h-full object-cover" />
+          <img
+            src={userAvatarUrl}
+            alt="Bé"
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (!target.src.includes('/assets/images/avatar_cute_owl')) {
+                target.src = '/assets/images/avatar_cute_owl_1792732530016.jpg';
+              }
+            }}
+          />
         </button>
       </div>
     </header>
