@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Trophy, Star, Award, Edit2, Check, Sparkles } from 'lucide-react';
-import { Badge, UserProfile } from '../types/math';
+import { Badge, UserProfile, Language } from '../types/math';
+import { getUIText, TEXTBOOK_NAME_VI, TEXTBOOK_NAME_EN } from '../utils/i18n';
 import { sounds } from '../utils/audio';
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
   onUpdateAvatar: (avatarUrl: string) => void;
   owlAvatarUrl: string;
   tigerAvatarUrl: string;
+  language: Language;
 }
 
 export const BadgeShowcase: React.FC<Props> = ({
@@ -19,6 +21,7 @@ export const BadgeShowcase: React.FC<Props> = ({
   onUpdateAvatar,
   owlAvatarUrl,
   tigerAvatarUrl,
+  language,
 }) => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState(profile.name);
@@ -68,7 +71,7 @@ export const BadgeShowcase: React.FC<Props> = ({
                   : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
               }`}
             >
-              🦉 Cú Thông Thái
+              🦉 {language === 'en' ? 'Wise Owl' : 'Cú Thông Thái'}
             </button>
             <button
               onClick={() => {
@@ -81,7 +84,7 @@ export const BadgeShowcase: React.FC<Props> = ({
                   : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
               }`}
             >
-              🐯 Hổ Tốc Độ
+              🐯 {language === 'en' ? 'Speedy Tiger' : 'Hổ Tốc Độ'}
             </button>
           </div>
         </div>
@@ -97,8 +100,8 @@ export const BadgeShowcase: React.FC<Props> = ({
                     sounds.playClick();
                     setIsEditingName(true);
                   }}
-                  className="p-1 text-slate-400 hover:text-amber-600 transition-colors"
-                  title="Đổi tên bé"
+                  className="p-1 text-slate-400 hover:text-amber-600 transition-colors cursor-pointer"
+                  title={getUIText(language, 'changeName')}
                 >
                   <Edit2 className="w-4 h-4" />
                 </button>
@@ -114,7 +117,7 @@ export const BadgeShowcase: React.FC<Props> = ({
                 />
                 <button
                   onClick={handleSaveName}
-                  className="p-1.5 bg-amber-500 text-white rounded-xl hover:bg-amber-600"
+                  className="p-1.5 bg-amber-500 text-white rounded-xl hover:bg-amber-600 cursor-pointer"
                 >
                   <Check className="w-4 h-4" />
                 </button>
@@ -123,12 +126,16 @@ export const BadgeShowcase: React.FC<Props> = ({
           </div>
 
           <p className="text-xs text-slate-500 font-medium">
-            Học sinh lớp 2 xuất sắc · Nhà thám hiểm các hòn đảo toán học
+            {language === 'en'
+              ? 'Distinguished Grade 2 Math Explorer · Connecting Knowledge to Life Curriculum'
+              : 'Học sinh lớp 2 xuất sắc · Khám phá SGK Kết nối tri thức với cuộc sống'}
           </p>
 
           <div className="grid grid-cols-3 gap-3 pt-2">
             <div className="bg-amber-50 border border-amber-200 p-3 rounded-2xl text-center">
-              <span className="text-[10px] font-bold uppercase text-amber-800 block">Tổng sao</span>
+              <span className="text-[10px] font-bold uppercase text-amber-800 block">
+                {language === 'en' ? 'Total Stars' : 'Tổng sao'}
+              </span>
               <div className="text-xl font-black text-amber-900 font-mono flex items-center justify-center gap-1">
                 <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
                 <span>{profile.totalStars}</span>
@@ -136,7 +143,9 @@ export const BadgeShowcase: React.FC<Props> = ({
             </div>
 
             <div className="bg-blue-50 border border-blue-200 p-3 rounded-2xl text-center">
-              <span className="text-[10px] font-bold uppercase text-blue-800 block">Huy hiệu</span>
+              <span className="text-[10px] font-bold uppercase text-blue-800 block">
+                {language === 'en' ? 'Badges' : 'Huy hiệu'}
+              </span>
               <div className="text-xl font-black text-blue-900 font-mono flex items-center justify-center gap-1">
                 <Award className="w-4 h-4 text-blue-600" />
                 <span>
@@ -146,7 +155,9 @@ export const BadgeShowcase: React.FC<Props> = ({
             </div>
 
             <div className="bg-emerald-50 border border-emerald-200 p-3 rounded-2xl text-center">
-              <span className="text-[10px] font-bold uppercase text-emerald-800 block">Kỷ lục đua xe</span>
+              <span className="text-[10px] font-bold uppercase text-emerald-800 block">
+                {language === 'en' ? 'Race High Score' : 'Kỷ lục đua xe'}
+              </span>
               <div className="text-xl font-black text-emerald-900 font-mono flex items-center justify-center gap-1">
                 <Trophy className="w-4 h-4 text-emerald-600" />
                 <span>{profile.speedHighScore}</span>
@@ -161,10 +172,11 @@ export const BadgeShowcase: React.FC<Props> = ({
         <div className="flex items-center justify-between">
           <h3 className="text-xl font-black text-slate-800 flex items-center gap-2">
             <Award className="w-6 h-6 text-amber-500" />
-            <span>Tủ Huy Hiệu Vinh Danh</span>
+            <span>{getUIText(language, 'badgesTitle')}</span>
           </h3>
           <span className="text-xs font-bold text-slate-500">
-            Đã mở khóa: {unlockedCount} / {badges.length}
+            {language === 'en' ? 'Unlocked: ' : 'Đã mở khóa: '}
+            {unlockedCount} / {badges.length}
           </span>
         </div>
 
@@ -188,15 +200,20 @@ export const BadgeShowcase: React.FC<Props> = ({
 
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <h4 className="text-sm font-black text-slate-800">{badge.title}</h4>
+                  <h4 className="text-sm font-black text-slate-800">
+                    {language === 'en' ? badge.titleEn : badge.title}
+                  </h4>
                   {badge.unlocked && (
                     <span className="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.2 rounded-full font-bold">
-                      Đạt
+                      {language === 'en' ? 'Unlocked' : 'Đạt'}
                     </span>
                   )}
                 </div>
+                {language === 'bilingual' && (
+                  <p className="text-[11px] font-bold text-sky-700 italic">{badge.titleEn}</p>
+                )}
                 <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                  {badge.description}
+                  {language === 'en' ? badge.descriptionEn : badge.description}
                 </p>
               </div>
             </div>

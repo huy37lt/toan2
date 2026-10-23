@@ -1,3 +1,5 @@
+export type Language = 'vi' | 'en' | 'bilingual';
+
 export type VisualAidType =
   | 'none'
   | 'ten_bundle' // Bó chục và que tính
@@ -26,18 +28,37 @@ export interface VisualAidData {
   barMai?: number;
 }
 
+export interface MathVocabItem {
+  vi: string;
+  en: string;
+  pronounceEn?: string;
+  category: string;
+  noteVi?: string;
+  noteEn?: string;
+  exampleVi?: string;
+  exampleEn?: string;
+}
+
 export interface MathQuestion {
   id: string;
   topicId: string;
   title: string;
-  promptText: string; // Câu hỏi hiển thị
-  speechText: string; // Nội dung đọc to
+  titleEn?: string;
+  promptText: string; // Câu hỏi tiếng Việt
+  promptTextEn?: string; // English question prompt
+  speechText: string; // Nội dung đọc tiếng Việt
+  speechTextEn?: string; // English speech text
   equation?: string; // Ví dụ: 35 + 28 = ?
   options: (string | number)[];
+  optionsEn?: (string | number)[];
   correctAnswer: string | number;
   explanation: string;
+  explanationEn?: string;
   hint: string;
+  hintEn?: string;
   visualAid?: VisualAidData;
+  textbookRef?: string; // e.g. "Toán 2 - Kết nối tri thức - Bài 7"
+  keyVocab?: MathVocabItem[]; // Thuật ngữ SGK liên quan
 }
 
 export interface LevelInfo {
@@ -45,7 +66,11 @@ export interface LevelInfo {
   islandId: string;
   levelNumber: number;
   title: string;
+  titleEn?: string;
   subtitle: string;
+  subtitleEn?: string;
+  textbookLesson?: string; // e.g. "Chủ đề 2: Phép cộng (qua 10) trong phạm vi 20"
+  textbookLessonEn?: string;
   requiredStarsToUnlock: number;
   questions: MathQuestion[];
 }
@@ -53,17 +78,23 @@ export interface LevelInfo {
 export interface IslandInfo {
   id: string;
   title: string;
+  titleEn: string;
   themeColor: string;
   accentBg: string;
   icon: string;
   description: string;
+  descriptionEn: string;
+  textbookChapter: string; // Tên Chủ đề chuẩn SGK Kết nối tri thức với cuộc sống
+  textbookChapterEn: string;
   levels: LevelInfo[];
 }
 
 export interface Badge {
   id: string;
   title: string;
+  titleEn: string;
   description: string;
+  descriptionEn: string;
   icon: string;
   unlocked: boolean;
   unlockedAt?: string;
@@ -78,4 +109,4 @@ export interface UserProfile {
   badges: string[]; // badge ids
 }
 
-export type ActiveTab = 'adventure' | 'speed_race' | 'manipulatives' | 'achievements';
+export type ActiveTab = 'adventure' | 'speed_race' | 'manipulatives' | 'achievements' | 'vocabulary';

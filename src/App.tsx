@@ -5,8 +5,9 @@ import { QuizArena } from './components/QuizArena';
 import { SpeedRaceGame } from './components/SpeedRaceGame';
 import { ManipulativesLab } from './components/ManipulativesLab';
 import { BadgeShowcase } from './components/BadgeShowcase';
+import { VocabularyHandbook } from './components/VocabularyHandbook';
 import { INITIAL_ISLANDS, INITIAL_BADGES } from './utils/mathQuestions';
-import { ActiveTab, LevelInfo, UserProfile, Badge } from './types/math';
+import { ActiveTab, LevelInfo, UserProfile, Badge, Language } from './types/math';
 import { sounds } from './utils/audio';
 
 // High-fidelity generated assets imported via Vite bundler
@@ -19,11 +20,25 @@ const OWL_AVATAR_URL = owlAvatarAsset;
 const TIGER_AVATAR_URL = tigerAvatarAsset;
 
 const STORAGE_KEY = 'toan_lop_2_save_v1';
+const LANG_STORAGE_KEY = 'toan_lop_2_lang_v1';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('adventure');
   const [activeLevel, setActiveLevel] = useState<LevelInfo | null>(null);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
+
+  // Language state: 'vi' | 'en' | 'bilingual'
+  const [language, setLanguage] = useState<Language>(() => {
+    try {
+      const saved = localStorage.getItem(LANG_STORAGE_KEY);
+      if (saved === 'vi' || saved === 'en' || saved === 'bilingual') {
+        return saved;
+      }
+    } catch {
+      // ignore
+    }
+    return 'vi';
+  });
 
   // Profile State
   const [profile, setProfile] = useState<UserProfile>(() => {
@@ -52,6 +67,16 @@ export default function App() {
 
   // Badges state with unlock status
   const [badges, setBadges] = useState<Badge[]>(INITIAL_BADGES);
+
+  // Save language preference
+  const handleLanguageChange = (newLang: Language) => {
+    setLanguage(newLang);
+    try {
+      localStorage.setItem(LANG_STORAGE_KEY, newLang);
+    } catch {
+      // ignore
+    }
+  };
 
   // Sync profile to localStorage and evaluate badges
   useEffect(() => {
@@ -158,6 +183,8 @@ export default function App() {
         soundEnabled={soundEnabled}
         onToggleSound={handleToggleSound}
         userAvatarUrl={profile.avatar}
+        language={language}
+        onLanguageChange={handleLanguageChange}
       />
 
       {/* Main View Area */}
@@ -169,6 +196,7 @@ export default function App() {
             completedLevels={profile.completedLevels}
             onSelectLevel={setActiveLevel}
             heroBannerUrl={HERO_BANNER_URL}
+            language={language}
           />
         )}
 
@@ -177,10 +205,13 @@ export default function App() {
             onUpdateHighScore={handleUpdateHighScore}
             highScore={profile.speedHighScore}
             mascotTigerUrl={TIGER_AVATAR_URL}
+            language={language}
           />
         )}
 
-        {activeTab === 'manipulatives' && <ManipulativesLab />}
+        {activeTab === 'manipulatives' && <ManipulativesLab language={language} />}
+
+        {activeTab === 'vocabulary' && <VocabularyHandbook language={language} />}
 
         {activeTab === 'achievements' && (
           <BadgeShowcase
@@ -190,6 +221,7 @@ export default function App() {
             onUpdateAvatar={handleUpdateAvatar}
             owlAvatarUrl={OWL_AVATAR_URL}
             tigerAvatarUrl={TIGER_AVATAR_URL}
+            language={language}
           />
         )}
       </main>
@@ -201,12 +233,20 @@ export default function App() {
           onClose={() => setActiveLevel(null)}
           onLevelComplete={handleLevelComplete}
           owlAvatarUrl={OWL_AVATAR_URL}
+          language={language}
         />
       )}
 
       {/* Quiet Footer */}
       <footer className="py-6 border-t border-amber-200/60 bg-white/60 text-center text-xs text-slate-500 font-medium">
-        <p>Toán Lớp 2 Phiêu Lưu Ký · Nền tảng học toán tương tác cho học sinh tiểu học</p>
+        <p className="font-bold text-slate-700">
+          {language === 'en'
+            ? 'Grade 2 Math Adventure Quest · Aligned with the textbook "Connecting Knowledge to Life"'
+            : 'Toán Lớp 2 Phiêu Lưu Ký · Bám sát giáo trình SGK "Kết nối tri thức với cuộc sống"'}
+        </p>
+        <p className="text-[11px] text-slate-400 mt-1">
+          Hỗ trợ song ngữ Tiếng Việt & Tiếng Anh · Chuẩn chương trình GDPT 2018 · Phát triển tư duy trực quan
+        </p>
       </footer>
     </div>
   );

@@ -154,24 +154,32 @@ class SoundEffects {
 export const sounds = new SoundEffects();
 
 /**
- * Text-to-Speech in Vietnamese for Grade 2 children
+ * Bilingual Text-to-Speech in Vietnamese & English for Grade 2 children
  */
-export function speakText(text: string) {
+export function speakText(text: string, lang: 'vi' | 'en' = 'vi') {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
   try {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'vi-VN';
-    utterance.rate = 0.9; // Slightly slower, very clear for 2nd graders
-    utterance.pitch = 1.1; // Gentle, friendly pitch
+    utterance.lang = lang === 'en' ? 'en-US' : 'vi-VN';
+    utterance.rate = lang === 'en' ? 0.85 : 0.9; // clear, gentle tempo for kids
+    utterance.pitch = 1.05; // friendly pitch
 
     const voices = window.speechSynthesis.getVoices();
-    const viVoice = voices.find(v => v.lang.includes('vi') || v.lang.includes('VI'));
-    if (viVoice) {
-      utterance.voice = viVoice;
+    if (lang === 'en') {
+      const enVoice = voices.find(
+        (v) =>
+          (v.lang.startsWith('en-US') || v.lang.startsWith('en-GB') || v.lang.startsWith('en')) &&
+          (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha') || true)
+      );
+      if (enVoice) utterance.voice = enVoice;
+    } else {
+      const viVoice = voices.find((v) => v.lang.includes('vi') || v.lang.includes('VI'));
+      if (viVoice) utterance.voice = viVoice;
     }
     window.speechSynthesis.speak(utterance);
   } catch {
     // Non-critical speech failure
   }
 }
+
