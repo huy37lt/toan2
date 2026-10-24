@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import { AdventureMap } from './components/AdventureMap';
 import { QuizArena } from './components/QuizArena';
 import { SpeedRaceGame } from './components/SpeedRaceGame';
+import { MarioRunGame } from './components/MarioRunGame';
 import { ManipulativesLab } from './components/ManipulativesLab';
 import { BadgeShowcase } from './components/BadgeShowcase';
 import { VocabularyHandbook } from './components/VocabularyHandbook';
@@ -61,6 +62,7 @@ export default function App() {
       totalStars: 0,
       completedLevels: {},
       speedHighScore: 0,
+      marioHighScore: 0,
       badges: [],
     };
   });
@@ -117,6 +119,9 @@ export default function App() {
         if (b.id === 'badge_speed_racer' && profile.speedHighScore >= 15) {
           isUnlocked = true;
         }
+        if (b.id === 'badge_mario_runner' && (profile.marioHighScore || 0) >= 150) {
+          isUnlocked = true;
+        }
       }
 
       return {
@@ -164,6 +169,14 @@ export default function App() {
     }));
   };
 
+  // High score in Mario Run
+  const handleUpdateMarioHighScore = (newScore: number) => {
+    setProfile((prev) => ({
+      ...prev,
+      marioHighScore: Math.max(prev.marioHighScore || 0, newScore),
+    }));
+  };
+
   // Name and Avatar Update
   const handleUpdateProfileName = (newName: string) => {
     setProfile((prev) => ({ ...prev, name: newName }));
@@ -188,7 +201,7 @@ export default function App() {
       />
 
       {/* Main View Area */}
-      <main className="flex-1 px-4 sm:px-6 py-6 md:py-8 max-w-7xl mx-auto w-full">
+      <main className="flex-1 px-3 sm:px-6 py-4 sm:py-6 md:py-8 max-w-7xl mx-auto w-full pb-28 md:pb-10">
         {activeTab === 'adventure' && (
           <AdventureMap
             islands={INITIAL_ISLANDS}
@@ -196,6 +209,15 @@ export default function App() {
             completedLevels={profile.completedLevels}
             onSelectLevel={setActiveLevel}
             heroBannerUrl={HERO_BANNER_URL}
+            language={language}
+          />
+        )}
+
+        {activeTab === 'mario_run' && (
+          <MarioRunGame
+            onUpdateHighScore={handleUpdateMarioHighScore}
+            highScore={profile.marioHighScore || 0}
+            mascotTigerUrl={TIGER_AVATAR_URL}
             language={language}
           />
         )}
@@ -238,7 +260,7 @@ export default function App() {
       )}
 
       {/* Quiet Footer */}
-      <footer className="py-6 border-t border-amber-200/60 bg-white/60 text-center text-xs text-slate-500 font-medium">
+      <footer className="py-6 mb-16 md:mb-0 border-t border-amber-200/60 bg-white/60 text-center text-xs text-slate-500 font-medium px-4">
         <p className="font-bold text-slate-700">
           {language === 'en'
             ? 'Grade 2 Math Adventure Quest · Aligned with the textbook "Connecting Knowledge to Life"'

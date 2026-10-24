@@ -228,6 +228,15 @@ export const UI_TRANSLATIONS = {
     clockMinuteLabel: 'Phút',
     randomClock: 'Đố ngẫu nhiên',
     checkClockAnswer: 'Kiểm tra',
+    // Mario Game
+    navMario: 'Mario Toán Học',
+    marioTitle: 'Nấm Nhí Toán Học (Mario Runner)',
+    marioDesc: 'Điều khiển nhân vật chạy nhảy, húc khối gạch ? để giải bài toán lớp 2, nhặt nấm thần kỳ và ăn xu vàng!',
+    marioJump: 'Nhảy Lên ⬆',
+    marioCoins: 'Đồng xu',
+    marioLives: 'Mạng',
+    marioOver: 'Hết Mạng! Chặng Chạy Rất Cố Gắng!',
+    marioScore: 'Điểm số',
     // Badges
     badgesTitle: 'Bộ Sưu Tập Huy Hiệu Vinh Danh',
     badgesDesc: 'Tích lũy sao vàng từ các bài tập trong SGK để mở khóa toàn bộ danh hiệu dũng sĩ Toán học!',
@@ -294,6 +303,15 @@ export const UI_TRANSLATIONS = {
     clockMinuteLabel: 'Minutes',
     randomClock: 'Random Challenge',
     checkClockAnswer: 'Check Answer',
+    // Mario Game
+    navMario: 'Math Mario',
+    marioTitle: 'Super Math Mario (Runner)',
+    marioDesc: 'Jump, hit question ? blocks to solve Grade 2 math, collect magic mushrooms and gold coins!',
+    marioJump: 'Jump Up ⬆',
+    marioCoins: 'Coins',
+    marioLives: 'Lives',
+    marioOver: 'Game Over! Great effort!',
+    marioScore: 'Score',
     // Badges
     badgesTitle: 'Trophy & Badge Showcase',
     badgesDesc: 'Earn gold stars across textbook lessons to unlock honorable math champion badges!',

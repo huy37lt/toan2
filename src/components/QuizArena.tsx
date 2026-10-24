@@ -305,7 +305,7 @@ export const QuizArena: React.FC<Props> = ({
                     key={idx}
                     onClick={() => handleSelect(option)}
                     disabled={isAnswered && isCorrect}
-                    className={`py-4 px-4 rounded-2xl text-base sm:text-lg font-black transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 ${btnStyle}`}
+                    className={`py-3.5 sm:py-4 px-3 sm:px-4 rounded-2xl text-base sm:text-lg font-black transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 min-h-[52px] select-none ${btnStyle}`}
                   >
                     <span>{optionLabel}</span>
                     {isAnswered && isThisCorrect && <CheckCircle2 className="w-5 h-5 shrink-0" />}

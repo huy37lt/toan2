@@ -385,7 +385,7 @@ export const SpeedRaceGame: React.FC<Props> = ({
                 <button
                   key={idx}
                   onClick={() => handleAnswer(option)}
-                  className="py-5 px-6 rounded-2xl border-2 border-amber-200 hover:border-amber-400 bg-amber-50/50 hover:bg-amber-100/70 text-slate-800 font-black text-2xl shadow-xs transition-all active:scale-95 cursor-pointer font-mono"
+                  className="py-4 sm:py-5 px-4 sm:px-6 rounded-2xl border-2 border-amber-200 hover:border-amber-400 bg-amber-50/50 hover:bg-amber-100/70 text-slate-800 font-black text-xl sm:text-2xl shadow-xs transition-all active:scale-95 cursor-pointer font-mono min-h-[58px]"
                 >
                   {option}
                 </button>

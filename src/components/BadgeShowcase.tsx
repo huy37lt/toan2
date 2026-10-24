@@ -131,8 +131,8 @@ export const BadgeShowcase: React.FC<Props> = ({
               : 'Học sinh lớp 2 xuất sắc · Khám phá SGK Kết nối tri thức với cuộc sống'}
           </p>
 
-          <div className="grid grid-cols-3 gap-3 pt-2">
-            <div className="bg-amber-50 border border-amber-200 p-3 rounded-2xl text-center">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
+            <div className="bg-amber-50 border border-amber-200 p-2.5 rounded-2xl text-center">
               <span className="text-[10px] font-bold uppercase text-amber-800 block">
                 {language === 'en' ? 'Total Stars' : 'Tổng sao'}
               </span>
@@ -142,7 +142,7 @@ export const BadgeShowcase: React.FC<Props> = ({
               </div>
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 p-3 rounded-2xl text-center">
+            <div className="bg-blue-50 border border-blue-200 p-2.5 rounded-2xl text-center">
               <span className="text-[10px] font-bold uppercase text-blue-800 block">
                 {language === 'en' ? 'Badges' : 'Huy hiệu'}
               </span>
@@ -154,13 +154,23 @@ export const BadgeShowcase: React.FC<Props> = ({
               </div>
             </div>
 
-            <div className="bg-emerald-50 border border-emerald-200 p-3 rounded-2xl text-center">
-              <span className="text-[10px] font-bold uppercase text-emerald-800 block">
-                {language === 'en' ? 'Race High Score' : 'Kỷ lục đua xe'}
+            <div className="bg-orange-50 border border-orange-200 p-2.5 rounded-2xl text-center">
+              <span className="text-[10px] font-bold uppercase text-orange-800 block">
+                {language === 'en' ? 'Race High Score' : 'Đua xe'}
               </span>
-              <div className="text-xl font-black text-emerald-900 font-mono flex items-center justify-center gap-1">
-                <Trophy className="w-4 h-4 text-emerald-600" />
+              <div className="text-xl font-black text-orange-900 font-mono flex items-center justify-center gap-1">
+                <Trophy className="w-4 h-4 text-orange-600" />
                 <span>{profile.speedHighScore}</span>
+              </div>
+            </div>
+
+            <div className="bg-rose-50 border border-rose-200 p-2.5 rounded-2xl text-center">
+              <span className="text-[10px] font-bold uppercase text-rose-800 block">
+                {language === 'en' ? 'Mario High Score' : 'Mario Run'}
+              </span>
+              <div className="text-xl font-black text-rose-900 font-mono flex items-center justify-center gap-1">
+                <Trophy className="w-4 h-4 text-rose-600" />
+                <span>{profile.marioHighScore || 0}</span>
               </div>
             </div>
           </div>

@@ -106,7 +106,8 @@ export interface UserProfile {
   totalStars: number;
   completedLevels: Record<string, number>; // levelId -> stars (1, 2, or 3)
   speedHighScore: number;
+  marioHighScore?: number;
   badges: string[]; // badge ids
 }
 
-export type ActiveTab = 'adventure' | 'speed_race' | 'manipulatives' | 'achievements' | 'vocabulary';
+export type ActiveTab = 'adventure' | 'speed_race' | 'mario_run' | 'manipulatives' | 'achievements' | 'vocabulary';

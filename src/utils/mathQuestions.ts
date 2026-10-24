@@ -1401,4 +1401,13 @@ export const INITIAL_BADGES: Badge[] = [
     icon: '🚀',
     unlocked: false,
   },
+  {
+    id: 'badge_mario_runner',
+    title: 'Hiệp Sĩ Nấm Thần',
+    titleEn: 'Super Mushroom Knight',
+    description: 'Đạt từ 150 điểm trở lên trong game Nấm Nhí Mario Toán Học',
+    descriptionEn: 'Score 150 or more points in Super Math Mario Runner',
+    icon: '🍄',
+    unlocked: false,
+  },
 ];
